@@ -8,9 +8,23 @@ Created on Tue Jul 13 05:48:22 2021
 import streamlit as st
 import pickle
 import nltk
+import string
+import requests, uuid
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+ps = PorterStemmer()
+#API keys
+from dotenv import load_dotenv
+import os
+load_dotenv() 
+API_KEY=os.getenv("API_KEY")
+LOCATION=os.getenv("LOCATION")
+#App title
+st.title("Assamese song review sentiment analyzer")
+# --------------------In language sentimental analysis ------------------------------
 
 #Function to clean the text
-def transform_text(text):
+def transform_text_inl(text):
     text=nltk.word_tokenize(text)
     stop=['অতএব', 'অথচ', 'অথবা', 'অধঃ', 'অন্ততঃ', 'অৰ্থাৎ', 'অৰ্থে', 'আও', 'আঃ', 'আচ্ছা', 'আপাততঃ', 'আয়ৈ', 'আৰু',
       'আস্', 'আহা', 'আহাহা', 'ইতস্ততঃ', 'ইতি', 'ইত্যাদি', 'ইস্', 'ইহ', 'উঃ', 'উৱা', 'উস্', 'এতেকে', 'এথোন',
@@ -37,23 +51,112 @@ def transform_text(text):
     return " ".join(y)
 
 #Loading the model and vectorizer
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-model = pickle.load(open('model.pkl','rb'))
+tfidf = pickle.load(open('vectorizer_inl.pkl','rb'))
+model_inl = pickle.load(open('model_inl.pkl','rb'))
 
-#App title
-st.title("Assamese song review sentiment analyzer")
-
+st.subheader('In language prediction')
+st.markdown('**Gives 81% accurate results**.')
 #Text box
-ip_sentence=st.text_area("Enter the assamese sentence")
+ip_sentence=st.text_area("Enter the assamese sentence..")
 
-if st.button('Predict'):
+if st.button('Predict.'):
     #Taking input and Cleaning the text
-    transformed_sentence=transform_text(ip_sentence)
+    transformed_sentence=transform_text_inl(ip_sentence)
     #Vectorizing
     vec=tfidf.transform([transformed_sentence])
     #predicting result and displaying it
-    result= model.predict(vec)[0]
+    result= model_inl.predict(vec)[0]
     if result == 1:
         st.header("Positive😇")
     else:
         st.header("Negative☹️")
+
+# ------------------------------------------------------------------------
+
+# --------------------Machine translation sentimental analysis -----------
+#Function to clean the text
+def transform_text_mt(text):
+    text = text.lower()
+    text = nltk.word_tokenize(text)
+    
+    y = []
+    for i in text:
+        if i.isalnum():
+            y.append(i)
+    
+    text = y[:]
+    y.clear()
+    
+    for i in text:
+        if i not in stopwords.words('english') and i not in string.punctuation:
+            y.append(i)
+            
+    text = y[:]
+    y.clear()
+    
+    for i in text:
+        y.append(ps.stem(i))
+    
+            
+    return " ".join(y)
+
+#Function to translate the text
+def translate(text):
+    # Add your subscription key and endpoint
+    subscription_key = API_KEY
+    endpoint = "https://api.cognitive.microsofttranslator.com"
+
+    # Add your location, also known as region. The default is global.
+    # This is required if using a Cognitive Services resource.
+    location = LOCATION
+
+    path = '/translate'
+    constructed_url = endpoint + path
+
+    params = {
+        'api-version': '3.0',
+        'from': 'as',
+        'to': ['en']
+    }
+    constructed_url = endpoint + path
+
+    headers = {
+        'Ocp-Apim-Subscription-Key': subscription_key,
+        'Ocp-Apim-Subscription-Region': location,
+        'Content-type': 'application/json',
+        'X-ClientTraceId': str(uuid.uuid4())
+    }
+
+    # You can pass more than one object in body.
+    body = [{
+        'text': text
+    }]
+
+    request = requests.post(constructed_url, params=params, headers=headers, json=body)
+    response = request.json()
+    return response[0]['translations'][0]['text']
+
+#Loading the model and vectorizer
+cv = pickle.load(open('vectorizer_mt.pkl','rb'))
+model_mt = pickle.load(open('model_mt.pkl','rb'))
+
+st.subheader('Machine translation based prediction')
+st.markdown('**Gives 88% accurate results**.')
+#Text box
+ip_sentence2=st.text_area("Enter the assamese sentence")
+translated_text=translate(ip_sentence2)
+
+if st.button('Predict'):
+    #Taking input and Cleaning the text
+    transformed_sentence2=transform_text_mt(translated_text)
+    #Vectorizing
+    vec2=cv.transform([transformed_sentence2])
+    #predicting result and displaying it
+    result2= model_mt.predict(vec2)[0]
+    st.text("Translated text : {data}".format(data=translated_text))
+    if result2 == 1:
+        st.header("Positive😇")
+    else:
+        st.header("Negative☹️")
+        
+# ------------------------------------------------------------------------
