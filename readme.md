@@ -67,7 +67,7 @@ There are several ways to run your own instance of the project depending on your
   7.  Run `pip install scikit-learn`(depends)
   8.  Run ` pip install python-dotenv`
   9.  Get your API key and location to use the Microsoft translation API ( refer [here](https://azure.microsoft.com/en-in/services/cognitive-services/translator/))
-  10. Create a .env file and write this code (replace "yourAPIkey" and "yourLocation" with the one that you obtained in step 10.)
+  10. Create a .env file and write this code (replace "yourAPIkey" and "yourLocation" with the one that you obtained in step ix.)
   ```
   API_KEY=yourAPIkey
   LOCATION=yourLocation
@@ -105,7 +105,7 @@ There are several ways to run your own instance of the project depending on your
   10. Run `pip install scikit-learn`(depends)
   11. Run ` pip install python-dotenv`
   12. Get your API key and location to use the Microsoft translation API ( refer [here](https://azure.microsoft.com/en-in/services/cognitive-services/translator/))
-  13. Create a .env file and write this code (replace "yourAPIkey" and "yourLocation" with the one that you obtained in step 10.)
+  13. Create a .env file and write this code (replace "yourAPIkey" and "yourLocation" with the one that you obtained in step xii.)
 
   ```
   API_KEY=yourAPIkey
