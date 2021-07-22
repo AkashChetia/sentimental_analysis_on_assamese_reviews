@@ -44,14 +44,13 @@ color: grey;
 background-color: white;
 text-decoration: underline;
 }
-
 a:hover,  a:active {
 color: red;
 background-color: white;
 text-decoration: underline;
 }
 .css-hi6a2p{
-    padding:0;
+    padding:0 10px;
 }
 .footer {
 width: 100%;
