@@ -41,24 +41,24 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 footer="""<style>
 a:link , a:visited{
 color: grey;
-background-color: transparent;
+background-color: white;
 text-decoration: underline;
 }
 
 a:hover,  a:active {
 color: red;
-background-color: transparent;
+background-color: white;
 text-decoration: underline;
 }
-
+.css-hi6a2p{
+    padding:0;
+}
 .footer {
-position: fixed;
-left:0;
-bottom: 0;
 width: 100%;
 background-color:  white;
 color: grey;
 text-align: center;
+margin-top:100px;
 }
 </style>
 <div class="footer">
@@ -72,7 +72,7 @@ text-align: center;
 </div>
 
 """
-st.markdown(footer,unsafe_allow_html=True)
+
 
 
 #Header image grid pattern
@@ -232,3 +232,5 @@ if st.button('Predict'):
         st.header("Negative☹️")
         
 # ------------------------------------------------------------------------
+
+st.markdown(footer,unsafe_allow_html=True)
