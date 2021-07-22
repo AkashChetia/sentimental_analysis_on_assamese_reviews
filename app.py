@@ -88,7 +88,7 @@ with col3:
     st.write("")
 
 #App title
-st.markdown("<h1 style='text-align: center; color: red;'>Assamese song review sentiment analyze</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: red;'>Assamese song review sentiment analyzer</h1>", unsafe_allow_html=True)
 
 
 # --------------------In language sentimental analysis ------------------------------
