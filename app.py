@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jul 13 05:48:22 2021
+Created on Thu Jul 22  17:00:22 2021
 
-@author: Reckon Mazumdar
+@co-author: Reckon Mazumdar, Akash Chetia, Kunjal Sarma, Srimanjyoti Dutta, Samarjit Sharma
 """
 ##Importing required libraries
 import streamlit as st
@@ -12,6 +12,7 @@ import string
 import requests, uuid
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+from streamlit.proto.Markdown_pb2 import Markdown
 ps = PorterStemmer()
 #API keys
 from dotenv import load_dotenv
@@ -19,8 +20,77 @@ import os
 load_dotenv() 
 API_KEY=os.getenv("API_KEY")
 LOCATION=os.getenv("LOCATION")
+
+
+#Page name and icon
+PAGE_CONFIG = {"page_title":"Assamese sentiment analyzer", "page_icon":"Asset/asset01.jpeg","layout":"centered"}
+st.set_page_config(**PAGE_CONFIG)
+
+
+#Re-set Hamburger menu and footer note-"Made with ****" removing hack
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
+
+#footer styles  put on top to load first to incorporate rest load
+footer="""<style>
+a:link , a:visited{
+color: grey;
+background-color: transparent;
+text-decoration: underline;
+}
+
+a:hover,  a:active {
+color: red;
+background-color: transparent;
+text-decoration: underline;
+}
+
+.footer {
+position: fixed;
+left:0;
+bottom: 0;
+width: 100%;
+background-color:  white;
+color: grey;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Developed with ❤ by - <br>
+<a style='text-align: center;' href="https://www.linkedin.com/in/reckon-mazumdar-49b8a7193/" target="_blank">Reckon Mazumdar</a>| 
+<a style='text-align: center;' href="https://www.linkedin.com/in/akash-chetia" target="_blank">Akash Chetia</a>| 
+<a style='text-align: center;' href="https://www.linkedin.com/in/kunjalsarma" target="_blank">Kunjal Sarma</a>|
+<a style='text-align: center;' href="https://www.linkedin.com/in/srimanjyoti-dutta-74317b154" target="_blank">Srimanjyoti Dutta</a>|
+<a style='text-align: center;' href="https://www.linkedin.com/in/samarjit-sharma-7b55371aa" target="_blank">Samarjit Sharma</a>
+</p>
+</div>
+
+"""
+st.markdown(footer,unsafe_allow_html=True)
+
+
+#Header image grid pattern
+col1, col2, col3 = st.beta_columns([1,6,1])
+
+with col1:
+    st.write("")
+
+with col2:
+    st.image("Asset/asset02.png")
+
+with col3:
+    st.write("")
+
 #App title
-st.title("Assamese song review sentiment analyzer")
+st.markdown("<h1 style='text-align: center; color: red;'>Assamese song review sentiment analyze</h1>", unsafe_allow_html=True)
+
+
 # --------------------In language sentimental analysis ------------------------------
 
 #Function to clean the text
@@ -54,7 +124,8 @@ def transform_text_inl(text):
 tfidf = pickle.load(open('vectorizer_inl.pkl','rb'))
 model_inl = pickle.load(open('model_inl.pkl','rb'))
 
-st.subheader('In language prediction')
+st.subheader('In language prediction:')
+st.markdown('`This approach is based on training the classifiers on the same language as text.`')
 st.markdown('**Gives 81% accurate results**.')
 #Text box
 ip_sentence=st.text_area("Enter the assamese sentence..")
@@ -140,7 +211,8 @@ def translate(text):
 cv = pickle.load(open('vectorizer_mt.pkl','rb'))
 model_mt = pickle.load(open('model_mt.pkl','rb'))
 
-st.subheader('Machine translation based prediction')
+st.subheader("Machine translation based prediction:")
+st.markdown('`In this approach we train the classifier on English reviews and for testing, we translate the Assamese reviews into English using Microsoft Translator api and then we classify the Sentiment of the review.`') 
 st.markdown('**Gives 88% accurate results**.')
 #Text box
 ip_sentence2=st.text_area("Enter the assamese sentence")
