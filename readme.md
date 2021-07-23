@@ -9,6 +9,7 @@ To use the app (hot loading), visit : https://assamese-sentiment-analyzer.heroku
 5. Numpy, Pandas
 6. NLTK
 7. Pickle
+8. Scikit learn
 
 ## Approach:
 
