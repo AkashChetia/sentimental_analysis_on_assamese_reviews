@@ -19,7 +19,7 @@ We have used two approaches to classify the sentiment of Assamese reviews as pos
 
 ## Dataset Used:
 
-We have used a total of 1029 Assamese songs reviews for the Sentiment Analysis. We have manually collected all of the reviews from Youtube comments and labeled them as 1 (for positive comment) and 0 (for negative comment). Out of 1029 reviews collected manually, 497 reviews are positive and the rest 519 are negative reviews. For Machine Translation based approach, we also need english reviews, by using [Microsoft Azure Cognitive Services(Translator)](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#translate-text) the native language reviews are translated to relative English reviews.
+We have used a total of 1028 Assamese songs reviews for the Sentiment Analysis. We have manually collected all of the reviews from Youtube comments and labeled them as 1 (for positive comment) and 0 (for negative comment). Out of 1029 reviews collected manually, 505 reviews are positive and the rest 523 are negative reviews. For Machine Translation based approach, we also need english reviews, by using [Microsoft Azure Cognitive Services(Translator)](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#translate-text) the native language reviews are translated to relative English reviews.
 
 ## Files Description:
 
